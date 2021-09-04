@@ -6,7 +6,7 @@ app.get('/', function(req, res){
 	res.sendFile(__dirname + '/client/index.html');
 });
 
-httpServer.listen(2000, '172.29.24.47');
+httpServer.listen(2000, '172.29.159.207');
 console.log('server initialized')
 
 // Backend
