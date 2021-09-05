@@ -1,4 +1,4 @@
-
+const map = require('./server/gameLoop');
 const app = require('express')();
 const httpServer = require("http").createServer(app);
 
@@ -12,8 +12,7 @@ console.log('server initialized')
 // Backend
 var canvas_size = [800, 500];
 var SOCKET_LIST = {};
-var PLAYER_LIST = {};
-var ball;
+var GL = new GameLoop();
 
 rectUp = {x:0, y:0, width: 800, height: 0}
 rectDown = {x:0, y:500, width: 800, height: 0}
@@ -62,28 +61,12 @@ var sendAllUsers = function(messageType, data){
 
 setInterval(function(){
 	var pack = []
-	if (Object.keys(SOCKET_LIST).length >= 2) {		
-		if(ball != null){
-			ball.update();
-			pack.push({
-				x: ball.x,
-				y: ball.y,
-				width: ball.width,
-				height: ball.height,
-				number: false
-			});
-		} else ball = new Ball();
-	}		
-	for(var i in PLAYER_LIST){
-		var player = PLAYER_LIST[i];
-		player.update();	
-		pack.push({
-			x: player.x,
-			y: player.y,
-			width: player.width,
-			height: player.height,
-			number: player.number
-		});
+	GL.update();
+	for(var zombie in GL.ZOMBIES){
+
+	}
+	for(var player in GL.PLAYERS){
+		
 	}
 	sendAllUsers('update', pack);
 }, 20);
