@@ -63,7 +63,7 @@ setInterval(function(){
 	var pack = []
 	GL.update();
 	for(var zombie in GL.ZOMBIES){
-
+		
 	}
 	for(var player in GL.PLAYERS){
 		

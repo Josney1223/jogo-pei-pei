@@ -1,13 +1,15 @@
 
 class GameLoop{
     constructor(){              
-        this.addPlayer = function(player){
+        this.addPlayer = function(){
+            player = new Player(this.map, this.ZOMBIES);
             this.PLAYERS[player] = player;
+            return player;
         }
 
         this.spawnZombies = function(){
             for(var i=0; i < this.hordeNum*2; i++){
-                zombie = new Zombie();
+                zombie = new Zombie(this.map, this.PLAYERS);
                 this.ZOMBIES.push(zombie);
             }
         }
@@ -19,10 +21,10 @@ class GameLoop{
             }
 
             for(var zombie in this.ZOMBIES){
-                zombie.update(this.map, this.PLAYERS);
+                zombie.update();
             }
             for(var player in this.PLAYERS){
-                player.update(this.map, this.ZOMBIES);
+                player.update();
             }
         }
 
