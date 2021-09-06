@@ -30,21 +30,24 @@ class AliveBehavior {
         return this.spd + 5
     }
 
+    get movementHitboxHeight(){
+        return 0.75 * this.sprite.height
+    }
 
     /**
      * Verifica se o ser vivo está colidindo com algo/alguém encima.
      * @returns um booleano indicando se haverá colisão. 
      */
     checkCollider2dNorth(collider){
-        // x0 = collider.x + this.hitboxBorder
-        // y0 = collider.y
-        // x1 = collider.x + collider.width - this.hitboxBorder
-        // y1 = collider.y + this.hitboxBorder
+        // x0 = this.collider2d.x + this.hitboxBorder
+        // y0 = this.collider2d.y + this.movementHitboxHeight
+        // x1 = this.collider2d.x + this.collider2d.width - this.hitboxBorder
+        // y1 = this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder
 
-        if (this.collider2d.x < collider.x + collider.width - this.hitboxBorder &&
-            this.collider2d.x + this.collider2d.width > collider.x + this.hitboxBorder &&
-            this.collider2d.y < collider.y + this.hitboxBorder &&
-            this.collider2d.y + this.collider2d.height > collider.y){
+        if (this.collider2d.x + this.hitboxBorder < collider.x + collider.width &&
+            this.collider2d.x + this.collider2d.width - this.hitboxBorder > collider.x &&
+            this.collider2d.y + this.movementHitboxHeight < collider.y + collider.height &&
+            this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder > collider.y + this.movementHitboxHeight){
             return true
         };
 
@@ -56,14 +59,14 @@ class AliveBehavior {
      * @returns um booleano indicando se haverá colisão. 
      */
     checkCollider2dSouth(collider){
-        // x0 = collider.x + this.hitboxBorder
-        // y0 = collider.y + collider.height - this.hitboxBorder
-        // x1 = collider.x + collider.width - this.hitboxBorder
-        // y1 = collider.y + collider.height - this.hitboxBorder
+        // x0 = this.collider2d.x + this.hitboxBorder
+        // y0 = this.collider2d.y + this.collider2d.height - this.hitboxBorder
+        // x1 = this.collider2d.x + this.collider2d.width - this.hitboxBorder
+        // y1 = this.collider2d.y + this.collider2d.height
 
-        if (this.collider2d.x < collider.x + collider.width - this.hitboxBorder &&
-            this.collider2d.x + this.collider2d.width > collider.x + this.hitboxBorder &&
-            this.collider2d.y < collider.y + collider.height - this.hitboxBorder &&
+        if (this.collider2d.x + this.hitboxBorder < collider.x + collider.width - this.hitboxBorder &&
+            this.collider2d.x + this.collider2d.width - this.hitboxBorder > collider.x + this.hitboxBorder &&
+            this.collider2d.y + this.collider2d.height - this.hitboxBorder < collider.y + collider.height - this.hitboxBorder &&
             this.collider2d.y + this.collider2d.height > collider.y + collider.height - this.hitboxBorder){
             return true
         };
@@ -76,15 +79,15 @@ class AliveBehavior {
      * @returns um booleano indicando se haverá colisão. 
      */
     checkCollider2dEast(collider){
-        // x0 = collider.x + collider.width - this.hitboxBorder
-        // y0 = collider.y + this.hitboxBorder
-        // x1 = collider.x + collider.width
-        // y1 = collider.y + collider.height - this.hitboxBorder
+        // x0 = this.collider2d.x + this.collider2d.width - this.hitboxBorder
+        // y0 = this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder
+        // x1 = this.collider2d.x + this.collider2d.width
+        // y1 = this.collider2d.y + this.collider2d.height - this.hitboxBorder
         
-        if (this.collider2d.x < collider.x + collider.width &&
+        if (this.collider2d.x + this.collider2d.width - this.hitboxBorder < collider.x + collider.width &&
             this.collider2d.x + this.collider2d.width > collider.x + collider.width - this.hitboxBorder &&
-            this.collider2d.y < collider.y + collider.height - this.hitboxBorder &&
-            this.collider2d.y + this.collider2d.height > collider.y + this.hitboxBorder){
+            this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder < collider.y + collider.height - this.hitboxBorder &&
+            this.collider2d.y + this.collider2d.height - this.hitboxBorder > collider.y + this.hitboxBorder){
             return true
         };
 
@@ -96,15 +99,15 @@ class AliveBehavior {
      * @returns um booleano indicando se haverá colisão. 
      */
     checkCollider2dWest(collider){
-        // x0 = collider.x
-        // y0 = collider.y + this.hitboxBorder
-        // x1 = collider.x + this.hitboxBorder
-        // y1 = collider.y + collider.height - this.hitboxBorder
+        // x0 = this.collider2d.x
+        // y0 = this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder
+        // x1 = this.collider2d.x + this.hitboxBorder
+        // y1 = this.collider2d.y + this.collider2d.height - this.hitboxBorder
 
         if (this.collider2d.x < collider.x + this.hitboxBorder &&
-            this.collider2d.x + this.collider2d.width > collider.x &&
-            this.collider2d.y < collider.y + collider.height - this.hitboxBorder &&
-            this.collider2d.y + this.collider2d.height > collider.y + this.hitboxBorder){
+            this.collider2d.x + this.hitboxBorder > collider.x &&
+            this.collider2d.y + this.movementHitboxHeight + this.hitboxBorder < collider.y + collider.height - this.hitboxBorder &&
+            this.collider2d.y + this.collider2d.height - this.hitboxBorder > collider.y + this.hitboxBorder){
             return true
         };
 
