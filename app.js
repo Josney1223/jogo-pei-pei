@@ -1,4 +1,4 @@
-const map = require('./server/gameLoop');
+const GameLoop = require('./server/gameLoop.js');
 const app = require('express')();
 const httpServer = require("http").createServer(app);
 
@@ -60,10 +60,10 @@ var sendAllUsers = function(messageType, data){
 }
 
 setInterval(function(){
-	var pack = []
+	var pack = [];
 	GL.update();
 	for(var zombie in GL.ZOMBIES){
-		
+
 	}
 	for(var player in GL.PLAYERS){
 		

@@ -1,26 +1,27 @@
 
 class GameLoop{
-    constructor(){              
+    constructor(){
         this.PLAYERS = {};
         this.ZOMBIES = [];
         this.map = {}
         this.hordeNum = 0;
     }
 
-    addPlayer = function(){
+    addPlayer(){
         player = new Player(this.map, this.ZOMBIES);
         this.PLAYERS[player] = player;
         return player;
     }
 
-    spawnZombies = function(){
+    spawnZombies(){
         for(var i=0; i < this.hordeNum*2; i++){
             zombie = new Zombie(this.map, this.PLAYERS);
             this.ZOMBIES.push(zombie);
         }
+	return null;
     }
 
-    update = function(){
+    update(){
         if(this.ZOMBIES.lenght <= 0){
             this.hordeNum++;
             this.spawnZombies();
@@ -41,3 +42,5 @@ class Wall{
         this.collider2dMovement = [x, y/4, width, height/4]
     }
 }
+
+module.exports = GameLoop
