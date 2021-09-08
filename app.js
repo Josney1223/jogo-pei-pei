@@ -1,4 +1,5 @@
-const GameLoop = require('./server/gameLoop.js');
+const GameLoop = require('./server/GameLoop.js');
+const Player = require('./server/Player.js');
 const app = require('express')();
 const httpServer = require("http").createServer(app);
 
@@ -14,16 +15,6 @@ var canvas_size = [800, 500];
 var SOCKET_LIST = {};
 var GL = new GameLoop();
 
-rectUp = {x:0, y:0, width: 800, height: 0}
-rectDown = {x:0, y:500, width: 800, height: 0}
-
-var checkCollision2d = function(rect1, rect2){
-	if(rect1.x < rect2.x + rect2.width && rect1.x + rect1.width > rect2.x && rect1.y < rect2.y + rect2.height && rect1.y + rect1.height > rect2.y){ // Collisao 
-			return true;
-		}	
-	return false;
-}
-
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -37,8 +28,7 @@ io.on("connection", (socket) => {
 	console.log("socket "+socket.id+" connected");
 	SOCKET_LIST[socket.id] = socket; 
 
-	var player = new Player(socket.id, Object.keys(SOCKET_LIST).length);
-	PLAYER_LIST[socket.id] = player;
+	GL.addPlayer(socket.id);
 
 	socket.on('disconnect', function(){
 		console.log("socket "+socket.id+" disconnected");
@@ -47,8 +37,10 @@ io.on("connection", (socket) => {
 	});
 	
 	socket.on('keyPress', function(data){
-		if(data.inputId == 'up') player.pressingUp = data.state;
-		if(data.inputId == 'down') player.pressingDown = data.state;
+		if(data.inputId == 'up') player.setMoveY(-1);
+		if(data.inputId == 'down') player.setMoveY(1);
+		if(data.inputId == 'left') player.setMoveX(-1);
+		if(data.inputId == 'right') player.setMoveX(1);
 	});
 });
 
@@ -63,7 +55,7 @@ setInterval(function(){
 	var pack = [];
 	GL.update();
 	for(var zombie in GL.ZOMBIES){
-
+		pack.push([zombie.posx, zombie.posy])
 	}
 	for(var player in GL.PLAYERS){
 		
