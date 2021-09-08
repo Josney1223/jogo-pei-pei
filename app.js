@@ -1,12 +1,27 @@
 const GameLoop = require('./server/gameLoop.js');
 const app = require('express')();
 const httpServer = require("http").createServer(app);
+const path = require("path")
+const express = require('express')
 
+// Rotas
 app.get('/', function(req, res){
 	res.sendFile(__dirname + '/client/index.html');
 });
 
-httpServer.listen(2000, '172.29.159.207');
+app.get('/about', function(req, res){
+	res.sendFile(__dirname + '/client/about.html');
+});
+
+app.get('/game', function(req, res){
+	res.sendFile(__dirname + '/client/layout.html');
+});
+
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")))
+app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")))
+app.use("/public", express.static(path.join(__dirname, "public")))
+
+httpServer.listen(2000, 'localhost');
 console.log('server initialized')
 
 // Backend

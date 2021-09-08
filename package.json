@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Josney1223/jogo-pei-pei/issues"
   },
-  "homepage": "https://github.com/Josney1223/jogo-pei-pei#readme"
+  "homepage": "https://github.com/Josney1223/jogo-pei-pei#readme",
+  "dependencies": {
+    "bootstrap": "^5.1.0",
+    "express": "^4.17.1",
+    "socket.io": "^4.2.0"
+  }
 }
