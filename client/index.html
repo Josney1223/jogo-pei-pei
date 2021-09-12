@@ -5,12 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PeiPei</title>
+        <link rel="stylesheet" type="text/css" href="static/css/style.css" />
     </head>
 
     <body style="width: 100vm">
         <div id="canvas" style="display: flex; justify-content: center">
             <canvas id="game_canvas" width="800" height="500" style="background-color: rgb(168, 219, 219);"></canvas>
             <canvas id="info_canvas" width="200" height="500" style="background-color: rgb(219, 233, 140);"></canvas>
+            <div class="box"></div>
         </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="scripts"></script>
     </body>
 </html>

@@ -18,17 +18,19 @@ app.get('/game', function(req, res){
 	res.sendFile(__dirname + '/client/layout.html');
 });
 
-app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")))
-app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")))
-app.use("/public", express.static(path.join(__dirname, "public")))
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
+app.use("/js", express.static(path.join(__dirname, "node_modules/bootstrap/dist/js")));
+app.use("/scripts", express.static(path.join(__dirname, "client/scripts.js")));
+app.use('/static', express.static('public'));
 
+//httpServer.listen(2000, '172.29.159.207');
 httpServer.listen(2000, 'localhost');
 console.log('server initialized')
 
 // Backend
 var canvas_size = [800, 500];
 var SOCKET_LIST = {};
-var GL = new GameLoop();
+var GL = new GameLoop(canvas_size);
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -43,19 +45,33 @@ io.on("connection", (socket) => {
 	console.log("socket "+socket.id+" connected");
 	SOCKET_LIST[socket.id] = socket; 
 
-	GL.addPlayer(socket.id);
+	//GL.addPlayer(socket.id);
 
 	socket.on('disconnect', function(){
 		console.log("socket "+socket.id+" disconnected");
-		GL.removePlayer(socket.id);
+		//GL.removePlayer(socket.id);
 		delete SOCKET_LIST[socket.id];
 	});
 	
 	socket.on('keyPress', function(data){
-		if(data.inputId == 'up') player.setMoveY(-1);
-		if(data.inputId == 'down') player.setMoveY(1);
-		if(data.inputId == 'left') player.setMoveX(-1);
-		if(data.inputId == 'right') player.setMoveX(1);
+		switch(data.inputId) {
+			case 'up':
+				player.setMoveY(-1);
+				break;
+			case 'down':
+				player.setMoveY(1); 
+				break;
+			case 'left':
+				player.setMoveX(-1); 
+				break;
+			case 'right':
+				player.setMoveX(1);
+				break;
+			case 'shootBullet':
+				break;
+			case 'mouseAngle':
+				break;
+		}
 	});
 });
 

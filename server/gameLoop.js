@@ -1,5 +1,6 @@
-const Zombie = require('Zombie.js');
-const Wall = require('Wall.js');
+const Zombie = require('./Zombie.js');
+const Wall = require('./Wall.js');
+const Player = require('./Player');
 
 class GameLoop{
     constructor(canvasSize){
@@ -15,7 +16,7 @@ class GameLoop{
     }
 
     addPlayer(id){
-        player = new Player(id, canvasSize[0], canvasSize[1], this.map, this.ZOMBIES);
+        player = new Player(id, this.canvasSize[0], this.canvasSize[1], this.map, this.ZOMBIES);
         this.PLAYERS[player] = player;
         return player;
     }
