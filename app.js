@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
 
 	socket.on('disconnect', function(){
 		console.log("socket "+socket.id+" disconnected");
-		delete PLAYER_LIST[socket.id];
+		GL.removePlayer(socket.id);
 		delete SOCKET_LIST[socket.id];
 	});
 	
@@ -67,13 +67,13 @@ var sendAllUsers = function(messageType, data){
 }
 
 setInterval(function(){
-	var pack = [];
-	GL.update();
+	var pack = {'zombies' : [], 'players': []};
+	GL.update();	
 	for(var zombie in GL.ZOMBIES){
-		pack.push([zombie.posx, zombie.posy])
+		pack['zombies'].push([zombie.posx, zombie.posy]);
 	}
 	for(var player in GL.PLAYERS){
-		
+		pack['players'].push([player.posx, player.posy]);
 	}
 	sendAllUsers('update', pack);
 }, 20);

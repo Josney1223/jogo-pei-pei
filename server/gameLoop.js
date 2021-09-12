@@ -24,6 +24,7 @@ class GameLoop{
         for(var i =0; i < this.PLAYERS.lenght; i++){
             if(this.PLAYERS[i].getId() == id){
                 delete this.PLAYERS[i];
+                break;
             }
         }
     }
@@ -41,7 +42,6 @@ class GameLoop{
             this.hordeNum++;
             this.spawnZombies();
         }
-
         for(var zombie in this.ZOMBIES){
             zombie.update();
         }

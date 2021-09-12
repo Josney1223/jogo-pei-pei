@@ -8,7 +8,7 @@ class Zombie extends AliveBehavior {
     constructor(players, map) {
         super(3, 1, 'new Animator("Zombie")', 0, 0, map)
         this.players = players
-    }
+    }    
 
     /**
      * Procura o jogador mais próximo para bater nele.
@@ -21,15 +21,15 @@ class Zombie extends AliveBehavior {
         this.posX
         this.posY
 
-        this.playerPos[0]
-        this.playerPos[1]
+        //this.playerPos[0]
+        //this.playerPos[1]
 
-        let inRange = 1 + 1 === 2 ? true : false    // mock pro calculo do range
+        //let inRange = 1 + 1 === 2 ? true : false    // mock pro calculo do range
 
         if (inRange) {
             this.hit()
         }else{
-            this.pathfind()
+            this.pathfind();
             this.move()
         }
     }
