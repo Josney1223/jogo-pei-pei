@@ -15,10 +15,10 @@ class GameLoop{
         this.hordeNum = 0;
     }
 
-    addPlayer(id){
-        player = new Player(id, this.canvasSize[0], this.canvasSize[1], this.map, this.ZOMBIES);
-        this.PLAYERS[player] = player;
-        return player;
+    addPlayer(id){        
+        this.p = new Player(id, this.canvasSize[0], this.canvasSize[1], this.map, this.ZOMBIES);
+        this.PLAYERS[id] = this.p;
+        return this.p;
     }
 
     removePlayer(id){
@@ -32,8 +32,8 @@ class GameLoop{
 
     spawnZombies(){
         for(var i=0; i < this.hordeNum*2; i++){
-            zombie = new Zombie(this.map, this.PLAYERS);
-            this.ZOMBIES.push(zombie);
+            this.zombie = new Zombie(this.map, this.PLAYERS);
+            this.ZOMBIES.push(this.zombie);
         }
 	return null;
     }
@@ -42,13 +42,15 @@ class GameLoop{
         if(this.ZOMBIES.lenght <= 0){
             this.hordeNum++;
             this.spawnZombies();
+        }        
+        for(var z of this.ZOMBIES){
+            z.update();
         }
-        for(var zombie in this.ZOMBIES){
-            zombie.update();
-        }
-        for(var player in this.PLAYERS){
-            player.update();
-        }
+        if (Object.keys(this.PLAYERS).length > 0){
+            for(let id in this.PLAYERS){
+                this.PLAYERS[id].update();
+            }
+        }        
     }
 }
 

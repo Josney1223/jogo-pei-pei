@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Josney1223/jogo-pei-pei#readme",
   "dependencies": {
-    "bootstrap": "^5.1.0",
+    "bootstrap": "^5.1.3",
     "express": "^4.17.1",
     "socket.io": "^4.2.0"
   }

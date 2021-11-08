@@ -1,4 +1,4 @@
-const GameLoop = require('./server/GameLoop.js');
+const GameLoop = require('./server/gameLoop.js');
 const Player = require('./server/Player.js');
 const app = require('express')();
 const httpServer = require("http").createServer(app);
@@ -44,32 +44,34 @@ const io = require("socket.io")(httpServer, {});
 io.on("connection", (socket) => {
 	console.log("socket "+socket.id+" connected");
 	SOCKET_LIST[socket.id] = socket; 
-
-	//GL.addPlayer(socket.id);
+	
+	p = GL.addPlayer(socket.id);
 
 	socket.on('disconnect', function(){
 		console.log("socket "+socket.id+" disconnected");
-		//GL.removePlayer(socket.id);
+		GL.removePlayer(socket.id);
 		delete SOCKET_LIST[socket.id];
 	});
 	
 	socket.on('keyPress', function(data){
 		switch(data.inputId) {
 			case 'up':
-				player.setMoveY(-1);
+				p.setMoveY(-1);
 				break;
 			case 'down':
-				player.setMoveY(1); 
+				p.setMoveY(1); 
 				break;
 			case 'left':
-				player.setMoveX(-1); 
+				p.setMoveX(-1); 
 				break;
 			case 'right':
-				player.setMoveX(1);
+				p.setMoveX(1);
 				break;
 			case 'shootBullet':
+				p.
 				break;
 			case 'mouseAngle':
+				p.shoot(data.state);
 				break;
 		}
 	});
@@ -85,11 +87,11 @@ var sendAllUsers = function(messageType, data){
 setInterval(function(){
 	var pack = {'zombies' : [], 'players': []};
 	GL.update();	
-	for(var zombie in GL.ZOMBIES){
-		pack['zombies'].push([zombie.posx, zombie.posy]);
+	for(var z in GL.ZOMBIES){
+		pack['zombies'].push([GL.ZOMBIES[z].getPosX, GL.ZOMBIES[z].getPosY]);
 	}
-	for(var player in GL.PLAYERS){
-		pack['players'].push([player.posx, player.posy]);
+	for(var id in GL.PLAYERS){
+		pack['players'].push([id, GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY]);
 	}
 	sendAllUsers('update', pack);
 }, 20);

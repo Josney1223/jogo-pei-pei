@@ -1,4 +1,5 @@
 const Collider2D = require('./Collider2D.js')
+const Sprite = require('./Sprite.js')
 
 // Talvez isso seja coisa do Player pro lock
 const NORTH = 0
@@ -13,14 +14,14 @@ class AliveBehavior {
         this.hp = hp
         this.spd = spd
         
-        this.anim = animator;       // nao implementado ainda
-        this.sprite = new Image()   // nao implementado ainda
-        
+        //this.anim = animator;       // nao implementado ainda
+        this.spr = new Sprite([128, 128], '')   // nao implementado ainda
+
         this.posX = spawn_x
         this.posY = spawn_y
 
-        this.collider2d = new Collider2D(spawn_x, spawn_y, this.sprite.width, this.sprite.height)
-        this.collider2dMovement = new Collider2D(spawn_x + this.sprite.width * 3/4, spawn_y + this.sprite.width * 3/4, this.sprite.width , this.sprite.height)
+        this.collider2d = new Collider2D(spawn_x, spawn_y, this.spr.width, this.spr.height)
+        this.collider2dMovement = new Collider2D(spawn_x + this.spr.width * 3/4, spawn_y + this.spr.width * 3/4, this.spr.width , this.spr.height)
         
         // Verificar depois só pra garantir
         this.map = map
@@ -31,9 +32,16 @@ class AliveBehavior {
     }
 
     get movementHitboxHeight(){
-        return 0.75 * this.sprite.height
+        return 0.75 * this.spr.height
     }
 
+    get getPosX(){
+        return this.posX;
+    }
+
+    get getPosY(){
+        return this.posY;
+    }
     /**
      * Verifica se o ser vivo está colidindo com algo/alguém encima.
      * @returns um booleano indicando se haverá colisão. 

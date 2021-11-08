@@ -1,5 +1,6 @@
 var gameCanvas = document.getElementById("game_canvas").getContext("2d");
 var socket = io();
+var last_angle = 0;
 
 socket.on('update', function(data) {
     //console.log(data);
@@ -40,6 +41,9 @@ document.onmousemove = function(event) {
     document.addEventListener("mousemove", e => {
         let angle = Math.atan2(e.pageX - boxCenter.x, - (e.pageY - boxCenter.y) )*(180 / Math.PI);	
         box.style.transform = `rotate(${angle}deg)`;
-        socket.emit('keyPress', {inputId: 'mouseAngle', state: [event.clientX, event.clientY, angle]});
+        if (angle > last_angle + 1 || angle < last_angle - 1){
+            last_angle = angle;
+            socket.emit('keyPress', {inputId: 'mouseAngle', state: [event.clientX, event.clientY, angle]});
+        }
     })
 }

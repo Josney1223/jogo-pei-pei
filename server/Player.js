@@ -6,7 +6,7 @@ class Player extends AliveBehavior{
         this.id = id;
         this.moveX = 0;
         this.moveY = 0;
-        this.zombies = zombies;        
+        this.zombies = zombies;                
     }
 
     getId(){
