@@ -15,7 +15,7 @@ app.get('/about', function(req, res){
 });
 
 app.get('/game', function(req, res){
-	res.sendFile(__dirname + '/client/layout.html');
+	res.sendFile(__dirname + '/client/game.html');
 });
 
 app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
