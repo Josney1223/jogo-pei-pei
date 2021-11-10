@@ -1,4 +1,5 @@
 const AliveBehavior = require('./AliveBehavior.js');
+const Gun = require('./Gun.js');
 
 class Player extends AliveBehavior{
     constructor(id, spawn_x, spawn_y, map, zombies){
@@ -6,7 +7,12 @@ class Player extends AliveBehavior{
         this.id = id;
         this.moveX = 0;
         this.moveY = 0;
-        this.zombies = zombies;                
+        this.zombies = zombies; 
+        this.playerGun = new Gun(1);               
+    }
+
+    getGun(){
+        return this.playerGun;
     }
 
     getId(){
@@ -21,11 +27,12 @@ class Player extends AliveBehavior{
         this.moveY = direction;
     }
 
-    shoot(direction){
-        
+    playerShoot(angle){
+        this.playerGun.fire(angle, this.posX, this.posY);
     }
 
     update(){        
+        this.playerGun.update();
         this.posX = this.posX + (this.moveX * this.spd);        
         this.posY = this.posY + (this.moveY * this.spd);
     }

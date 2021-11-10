@@ -21,9 +21,6 @@ document.onkeydown = function(event) {
 }
 
 //Evento do Mouse
-document.onmousedown = function() {
-    socket.emit('keyPress', {inputId: 'shootBullet', state: true})
-}
 document.onmouseup = function() {
     socket.emit('keyPress', {inputId: 'shootBullet', state: false})
 }

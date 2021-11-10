@@ -8,6 +8,14 @@ class Bullet{
         this.spdY = Math.sin(angle/180);
     }
 
+    getPosX(){
+        return this.posX;
+    }
+
+    getPosY(){
+        return this.posY;
+    }
+
     update(){
         this.posX = this.posX + this.spdX;
         this.posY = this.posY + this.spdY;

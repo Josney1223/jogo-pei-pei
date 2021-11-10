@@ -68,11 +68,8 @@ io.on("connection", (socket) => {
 				p.setMoveX(1);
 				break;
 			case 'shootBullet':
-				p.
-				break;
-			case 'mouseAngle':
-				p.shoot(data.state);
-				break;
+				p.playerShoot(data.state);
+				break;			
 		}
 	});
 });
@@ -85,14 +82,17 @@ var sendAllUsers = function(messageType, data){
 }
 
 setInterval(function(){
-	var pack = {'zombies' : [], 'players': []};
+	var pack = {'zombies' : [], 'players': {}};
 	GL.update();	
 	for(var z in GL.ZOMBIES){
 		pack['zombies'].push([GL.ZOMBIES[z].getPosX, GL.ZOMBIES[z].getPosY]);
 	}
 	for(var id in GL.PLAYERS){
-		pack['players'].push([id, GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY]);
+		pack['players'][id] = {}
+		pack['players'][id]['pos'] = [GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY] 
+		pack['players'][id]['bullets'] = GL.PLAYERS[id].getGun().getBullets();
 	}
+	console.log(pack);
 	sendAllUsers('update', pack);
 }, 20);
 
