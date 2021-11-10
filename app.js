@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
 	p = GL.addPlayer(socket.id);
 
 	socket.on('disconnect', function(){
-		console.log("socket "+socket.id+" disconnected");
+		console.log("socket "+socket.id+" disconnected");		
 		GL.removePlayer(socket.id);
 		delete SOCKET_LIST[socket.id];
 	});
@@ -92,7 +92,6 @@ setInterval(function(){
 		pack['players'][id]['pos'] = [GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY] 
 		pack['players'][id]['bullets'] = GL.PLAYERS[id].getGun().getBullets();
 	}
-	console.log(pack);
 	sendAllUsers('update', pack);
 }, 20);
 

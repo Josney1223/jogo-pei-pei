@@ -20,7 +20,7 @@ class Player extends AliveBehavior{
     }
 
     setMoveX(direction) {
-        this.moveX = this.moveX + direction;
+        this.moveX = direction;
     }
 
     setMoveY(direction){
