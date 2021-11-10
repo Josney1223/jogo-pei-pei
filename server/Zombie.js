@@ -6,48 +6,37 @@ const AliveBehavior = require('./AliveBehavior.js')
 
 class Zombie extends AliveBehavior {
     constructor(players, map) {
-        super(3, 1, 'new Animator("Zombie")', 0, 0, map)
+        super(3, 50, 'new Animator("Zombie")', Math.random()*700, 250, map)
         this.players = players
+        this.timer = 10*this.spd;
     }    
 
     /**
      * Procura o jogador mais próximo para bater nele.
      */
     update(){
-        // Verifica se tem um player no range do ataque,
-        // se tem, então o zumbi irá atacá-lo,
-        // senão, move em direção de um jogador.
+       if (this.timer <= 0){
+            this.hit();
+            this.alive = false;
+       } else {
+            this.timer--;
+       }
 
-        this.posX
-        this.posY
-
-        //this.playerPos[0]
-        //this.playerPos[1]
-
-        //let inRange = 1 + 1 === 2 ? true : false    // mock pro calculo do range
-
-        if (inRange) {
-            this.hit()
-        }else{
-            this.pathfind();
-            this.move()
-        }
+       for (var p in this.players){
+           for (var b in this.players[p].playerGun.bullet_list){
+               this.checkAllCollider2d(this.players[p].playerGun.bullet_list[b].collider);
+           }
+       }
     }
 
     /**
      * Ataca um jogador batendo nele.
      */
     hit(){
-        // Mandar a posição do player pra algum lugar e o player toma dano?
+        for (var p in this.players){
+            this.players[p].takeDmg(1);
+        }
     }
-
-    /**
-     * Procura o jogador mais próximo e o caminho mais rápido até ele.
-     */
-    pathfind(){
-        // procurar o algoritmo (A*)
-    }
-
 }
 
 module.exports = Zombie

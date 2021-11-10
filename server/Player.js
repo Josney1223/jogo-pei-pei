@@ -10,7 +10,12 @@ class Player extends AliveBehavior{
         this.angle = 0;
         this.zombies = zombies; 
         this.playerGun = new Gun(1); 
-        this.moveGhost = 10;              
+        this.moveGhost = 10; 
+        this.pressingUp = false;
+        this.pressingDown = false;
+        this.pressingLeft = false;                     
+        this.pressingRight = false;
+        this.aim = {x: this.posX, y: this.posY};      
     }
 
     getGun(){
@@ -25,31 +30,29 @@ class Player extends AliveBehavior{
         return this.angle;
     }
 
-    setAngle(angle){
-        this.angle = angle[2];
+    getAim(){
+        return this.aim;
     }
 
-    setMove(direction){
-        this.moveGhost = 15;    
-        this.moveX = direction[0];    
-        this.moveY = direction[1];
+    playerMove(xAxis, yAxis){
+        this.move(xAxis, yAxis);
+    }
+
+    moveAim(xAxis, yAxis){
+        this.aim.x = this.aim.x + (xAxis*10);
+        this.aim.y = this.aim.y + (yAxis*10);
+    }
+
+    setAngle(angle){
+        this.angle = angle;
     }
 
     playerShoot(){        
         this.playerGun.fire(this.angle, this.posX, this.posY);
     }
 
-    update(){        
-        this.playerGun.update();
-        this.moveGhost--;
-
-        if(this.moveGhost > 0){ 
-            this.posX = this.posX + (this.moveX * this.spd);        
-            this.posY = this.posY + (this.moveY * this.spd);
-        } else {
-            this.moveX = 0;
-            this.moveY = 0;
-        }
+    update(){
+        this.playerGun.update();                        
     }
 }
 

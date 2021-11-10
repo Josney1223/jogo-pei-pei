@@ -13,6 +13,8 @@ class AliveBehavior {
         this.alive = true
         this.hp = hp
         this.spd = spd
+        this.movX = 0
+        this.movY = 0
         
         //this.anim = animator;       // nao implementado ainda
         this.spr = new Sprite([128, 128], '')   // nao implementado ainda
@@ -122,6 +124,14 @@ class AliveBehavior {
         return false
     }
 
+    checkAllCollider2d(collider){
+        if(this.checkCollider2dEast(collider) || this.checkCollider2dNorth(collider) || this.checkCollider2dSouth(collider) || this.checkCollider2dWest(collider)){
+            return true
+        }
+
+        return false
+    }
+
     /**
      * Toma dano, reduzindo o hp.
      */
@@ -139,7 +149,7 @@ class AliveBehavior {
         let moveY = 0
         let i
         let collided = false
-        let mapSize = this.map.length
+        let mapSize = this.map.length-1        
 
         if (xAxis > 0){
             i = 0
@@ -147,7 +157,7 @@ class AliveBehavior {
             do{
                 collided = this.checkCollider2dEast(this.map[i])
                 i++
-            }while(!collided || i < mapSize)
+            }while(!collided && i < mapSize)
             
             if (!collided){
                 moveX = xAxis * this.spd
@@ -159,7 +169,7 @@ class AliveBehavior {
             do{
                 collided = this.checkCollider2dWest(this.map[i])
                 i++
-            }while(!collided || i < mapSize)
+            }while(!collided && i < mapSize)
             
             if (!collided){
                 moveX = xAxis * this.spd
@@ -172,7 +182,7 @@ class AliveBehavior {
             do{
                 collided = this.checkCollider2dSouth(this.map[i])
                 i++
-            }while(!collided || i < mapSize)
+            }while(!collided && i < mapSize)
             
             if (!collided){
                 moveY = yAxis * this.spd
@@ -183,7 +193,7 @@ class AliveBehavior {
             do{
                 collided = this.checkCollider2dNorth(this.map[i])
                 i++
-            }while(!collided || i < mapSize)
+            }while(!collided && i < mapSize)
             
             if (!collided){
                 moveY = yAxis * this.spd

@@ -54,10 +54,32 @@ io.on("connection", (socket) => {
 	});
 	
 	socket.on('keyPress', function(data){
-		switch(data.inputId) {
-			case 'move':
-				p.setMove(data.state);				
-				break;				
+		console.log("Package:"+data.inputId);
+		switch(data.inputId) {			
+			/*case('up'): 
+				p.move(0, -1);
+				break;
+			case('down'):
+				p.move(0, 1);
+				break;*/
+			case('left'):
+				p.move(-1, 0);
+				break;
+			case('right'):
+				p.move(1, 0);					
+				break;	
+			case('aim_up'):
+				p.moveAim(0,-1);
+				break;	
+			case('aim_down'):
+				p.moveAim(0,1);
+				break;
+			case('aim_left'):
+				p.moveAim(-1,0);
+				break;
+			case('aim_right'):
+				p.moveAim(1,0);
+				break;		
 			case 'shootBullet':
 				p.playerShoot();
 				break;
@@ -76,17 +98,19 @@ var sendAllUsers = function(messageType, data){
 }
 
 setInterval(function(){
-	var pack = {'zombies' : [], 'players': {}};
+	var pack = {zombies : [], players: {}};
 	GL.update();	
 	for(var z in GL.ZOMBIES){
-		pack['zombies'].push([GL.ZOMBIES[z].getPosX, GL.ZOMBIES[z].getPosY]);
+		pack.zombies.push([GL.ZOMBIES[z].getPosX, GL.ZOMBIES[z].getPosY]);
 	}
 	for(var id in GL.PLAYERS){
 		pack['players'][id] = {}
 		pack['players'][id]['pos'] = [GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY] 
-		pack['players'][id]['bullets'] = GL.PLAYERS[id].getGun().getBullets();
+		pack['players'][id]['bullets'] = GL.PLAYERS[id].getGun().getGunPack();
 		pack['players'][id]['angle'] = GL.PLAYERS[id].getAngle();
+		pack['players'][id]['aim'] = GL.PLAYERS[id].getAim();
 	}
+	console.log(pack);
 	sendAllUsers('update', pack);
 }, 20);
 

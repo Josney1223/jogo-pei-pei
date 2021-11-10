@@ -1,22 +1,23 @@
 const Zombie = require('./Zombie.js');
 const Wall = require('./Wall.js');
-const Player = require('./Player');
+const Player = require('./Player.js');
+const Collider2D = require('./Collider2D.js');
 
 class GameLoop{
     constructor(canvasSize){
-        this.rectUp = {x:0, y:0, width: 800, height: 1};
-        this.rectDown = {x:0, y:500, width: 800, height: 1};
-        this.rectLeft = {x:0, y:0, width:1, height: 500};
-        this.rectRight = {x: 800, y: 500, width: 1, height: 500};
+        this.rectUp = new Collider2D(0, 0, 800, 1);
+        this.rectDown = new Collider2D(0, 500, 800, 1);
+        this.rectLeft = new Collider2D(0, 0, 1, 500);
+        this.rectRight = new Collider2D(800, 500, 1, 500);
         this.canvasSize = canvasSize;
         this.PLAYERS = {};
         this.ZOMBIES = [];
-        this.map = {}
+        this.map = [this.rectUp, this.rectDown, this.rectLeft, this.rectRight];
         this.hordeNum = 0;
     }
 
     addPlayer(id){        
-        this.p = new Player(id, 0,0, this.map, this.ZOMBIES);
+        this.p = new Player(id, 0, 400, this.map, this.ZOMBIES);
         this.PLAYERS[id] = this.p;
         return this.p;
     }
@@ -27,17 +28,18 @@ class GameLoop{
 
     spawnZombies(){
         for(var i=0; i < this.hordeNum*2; i++){
-            this.zombie = new Zombie(this.map, this.PLAYERS);
-            this.ZOMBIES.push(this.zombie);
-        }
-	return null;
+            z = new Zombie(this.map, this.PLAYERS);
+            this.ZOMBIES.push(z);
+        }	
     }
 
     update(){
+        this.spawnZombies();
+        /*
         if(this.ZOMBIES.lenght <= 0){
             this.hordeNum++;
             this.spawnZombies();
-        }        
+        } */       
         for(var z of this.ZOMBIES){
             z.update();
         }
