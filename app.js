@@ -71,7 +71,7 @@ io.on("connection", (socket) => {
 				p.playerShoot(data.state);
 				break;
 			case 'mouseAngle':
-				p.attMouseAngle(data.state[2]);
+				p.setAngle(data.state[2]);
 				break;			
 		}
 	});
@@ -94,6 +94,7 @@ setInterval(function(){
 		pack['players'][id] = {}
 		pack['players'][id]['pos'] = [GL.PLAYERS[id].getPosX, GL.PLAYERS[id].getPosY] 
 		pack['players'][id]['bullets'] = GL.PLAYERS[id].getGun().getBullets();
+		pack['players'][id]['angle'] = GL.PLAYERS[id].getAngle();
 	}
 	sendAllUsers('update', pack);
 }, 20);
