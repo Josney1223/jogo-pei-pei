@@ -3,17 +3,17 @@ var socket = io();
 var last_angle = 0;
 var angulo = 0;
 var img = new Image();
+var img2 = new Image();
 var bgImg = new Image();
 var aim = {x: 0, y: 0}
 
 socket.on('update', function(data) {
     gameCanvas.clearRect(0,0, 800, 500);
-    draw(0,0,0,"/static/img/graveyard.png");
-
-    //for(const [key, value])
+    //draw(0,0,0,"/static/img/graveyard.png", bgImg);
+    //for(const [key, value])    
 
     for(const [key,value] of Object.entries(data.players)) {
-        draw(data.players[key]['pos'][0], data.players[key]['pos'][1],data.players[key]['angle'], "/static/img/pepe.png");
+        draw(data.players[key]['pos'][0], data.players[key]['pos'][1],data.players[key]['angle'], "/static/img/pepe.png", img);
         drawAim(data.players[key]['aim']['x'], data.players[key]['aim']['y']);
         angulo = angle(data.players[key]['pos'][0], data.players[key]['pos'][1], data.players[key]['aim']['x'], data.players[key]['aim']['y']);
 
@@ -33,13 +33,13 @@ function drawAim(x, y){
     aim.y = y;
 }
 
-function draw(x,y,angle, src) {
+function draw(x,y,angle, src, img_var) {
     gameCanvas.save()
     gameCanvas.rotate(angle)
-    img.onload = function() {
-        gameCanvas.drawImage(img, x, y)
+    img_var.onload = function() {
+        gameCanvas.drawImage(img_var, x, y)
     }
-    img.src = src
+    img_var.src = src
     gameCanvas.restore()
 }
 

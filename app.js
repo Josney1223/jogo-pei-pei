@@ -24,19 +24,13 @@ app.use("/scripts", express.static(path.join(__dirname, "client/scripts.js")));
 app.use('/static', express.static('public'));
 
 //httpServer.listen(2000, '172.29.159.207');
-httpServer.listen(2000, 'localhost');
+httpServer.listen(2000, '172.29.55.251');
 console.log('server initialized')
 
 // Backend
 var canvas_size = [800, 500];
 var SOCKET_LIST = {};
 var GL = new GameLoop(canvas_size);
-
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 //Socket.io
 const io = require("socket.io")(httpServer, {});
@@ -45,7 +39,7 @@ io.on("connection", (socket) => {
 	console.log("socket "+socket.id+" connected");
 	SOCKET_LIST[socket.id] = socket; 
 	
-	p = GL.addPlayer(socket.id);
+	GL.addPlayer(socket.id);
 
 	socket.on('disconnect', function(){
 		console.log("socket "+socket.id+" disconnected");		
@@ -54,37 +48,36 @@ io.on("connection", (socket) => {
 	});
 	
 	socket.on('keyPress', function(data){
-		console.log("Package:"+data.inputId);
 		switch(data.inputId) {			
 			/*case('up'): 
-				p.move(0, -1);
+				GL.PLAYERS[socket.id].move(0, -1);
 				break;
 			case('down'):
-				p.move(0, 1);
+				GL.PLAYERS[socket.id].move(0, 1);
 				break;*/
 			case('left'):
-				p.move(-1, 0);
+				GL.PLAYERS[socket.id].move(-1, 0);
 				break;
 			case('right'):
-				p.move(1, 0);					
+				GL.PLAYERS[socket.id].move(1, 0);					
 				break;	
 			case('aim_up'):
-				p.moveAim(0,-1);
+				GL.PLAYERS[socket.id].moveAim(0,-1);
 				break;	
 			case('aim_down'):
-				p.moveAim(0,1);
+				GL.PLAYERS[socket.id].moveAim(0,1);
 				break;
 			case('aim_left'):
-				p.moveAim(-1,0);
+				GL.PLAYERS[socket.id].moveAim(-1,0);
 				break;
 			case('aim_right'):
-				p.moveAim(1,0);
+				GL.PLAYERS[socket.id].moveAim(1,0);
 				break;		
 			case 'shootBullet':
-				p.playerShoot();
+				GL.PLAYERS[socket.id].playerShoot();
 				break;
 			case 'mouseAngle':
-				p.setAngle(data.state);				
+				GL.PLAYERS[socket.id].setAngle(data.state);				
 				break;			
 		}
 	});
@@ -110,7 +103,6 @@ setInterval(function(){
 		pack['players'][id]['angle'] = GL.PLAYERS[id].getAngle();
 		pack['players'][id]['aim'] = GL.PLAYERS[id].getAim();
 	}
-	console.log(pack);
 	sendAllUsers('update', pack);
 }, 20);
 

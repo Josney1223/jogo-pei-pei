@@ -33,8 +33,7 @@ class GameLoop{
         }	
     }
 
-    update(){
-        this.spawnZombies();
+    update(){        
         /*
         if(this.ZOMBIES.lenght <= 0){
             this.hordeNum++;
