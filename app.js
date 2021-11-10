@@ -69,6 +69,9 @@ io.on("connection", (socket) => {
 				break;
 			case 'shootBullet':
 				p.playerShoot(data.state);
+				break;
+			case 'mouseAngle':
+				p.attMouseAngle(data.state[2]);
 				break;			
 		}
 	});

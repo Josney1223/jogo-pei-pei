@@ -7,6 +7,7 @@ class Player extends AliveBehavior{
         this.id = id;
         this.moveX = 0;
         this.moveY = 0;
+        this.angle = 0;
         this.zombies = zombies; 
         this.playerGun = new Gun(1);               
     }
@@ -17,6 +18,14 @@ class Player extends AliveBehavior{
 
     getId(){
         return this.id;
+    }
+
+    getAngle(){
+        return this.angle;
+    }
+
+    setAngle(angle){
+        this.angle = angle;
     }
 
     setMoveX(direction) {
