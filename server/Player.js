@@ -30,12 +30,12 @@ class Player extends AliveBehavior{
     }
 
     setMoveX(direction) {
-        this.moveGhost = 10; 
+        this.moveGhost = 10;         
         this.moveX = direction;
     }
 
     setMoveY(direction){
-        this.moveGhost = 10; 
+        this.moveGhost = 10;        
         this.moveY = direction;
     }
 
@@ -46,11 +46,13 @@ class Player extends AliveBehavior{
     update(){        
         this.playerGun.update();
         this.moveGhost--;
-        
+
         if(this.moveGhost > 0){ 
             this.posX = this.posX + (this.moveX * this.spd);        
             this.posY = this.posY + (this.moveY * this.spd);
         }
+        this.moveX = 0;
+        this.moveY = 0;
     }
 }
 
