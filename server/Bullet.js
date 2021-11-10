@@ -5,7 +5,7 @@ class Bullet{
         this.posX = posX;
         this.posY = posY;
         this.spdX = Math.cos(angle/180);
-        this.spdY = Math.sin(angle/180);
+        this.spdY = Math.sin(angle/180);        
     }
 
     getPosX(){
@@ -18,7 +18,7 @@ class Bullet{
 
     update(){
         this.posX = this.posX + this.spdX;
-        this.posY = this.posY + this.spdY;
+        this.posY = this.posY + this.spdY;        
     }
 
 }

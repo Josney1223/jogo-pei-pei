@@ -55,23 +55,14 @@ io.on("connection", (socket) => {
 	
 	socket.on('keyPress', function(data){
 		switch(data.inputId) {
-			case 'up':
-				p.setMoveY(-1);
-				break;
-			case 'down':
-				p.setMoveY(1); 
-				break;
-			case 'left':
-				p.setMoveX(-1); 
-				break;
-			case 'right':
-				p.setMoveX(1);
-				break;
+			case 'move':
+				p.setMove(data.state);				
+				break;				
 			case 'shootBullet':
-				p.playerShoot(data.state);
+				p.playerShoot();
 				break;
 			case 'mouseAngle':
-				p.setAngle(data.state[2]);
+				p.setAngle(data.state);				
 				break;			
 		}
 	});

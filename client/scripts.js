@@ -28,20 +28,26 @@ function draw(x,y,angle) {
 //Evento do teclado
 document.onkeydown = function(event) {
     const key = event.key.toLowerCase();
-    if(key === "d") {
-        socket.emit('keyPress',{inputId: 'right', state: true});
-    } else if (key === "s") {
-        socket.emit('keyPress',{inputId: 'down', state: true});
-    } else if (key === "a") {
-        socket.emit('keyPress',{inputId: 'left', state: true});
-    } else if (key === "w") {
-        socket.emit('keyPress',{inputId: 'up', state: true});
+    var moveX = 0;
+    var moveY = 0;
+    if(key == "d") {
+        moveX = moveX + 1;
+    } 
+    if (key == "s") {
+        moveY = moveY + 1;
     }
+    if (key == "a") {
+        moveX = moveX - 1;
+    } 
+    if (key == "w") {
+        moveY = moveY - 1;
+    }
+    socket.emit('keyPress',{inputId: 'move', state: [moveX, moveY]});
 }
 
 //Evento do Mouse
-document.onmouseup = function() {
-    socket.emit('keyPress', {inputId: 'shootBullet', state: false})
+document.onmousedown = function() {
+    socket.emit('keyPress', {inputId: 'shootBullet', state: true})
 }
 document.onmousemove = function(event) {
     //Isso é para essa caixinha

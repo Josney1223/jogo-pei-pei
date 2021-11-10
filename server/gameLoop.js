@@ -16,7 +16,7 @@ class GameLoop{
     }
 
     addPlayer(id){        
-        this.p = new Player(id, this.canvasSize[0], this.canvasSize[1], this.map, this.ZOMBIES);
+        this.p = new Player(id, 0,0, this.map, this.ZOMBIES);
         this.PLAYERS[id] = this.p;
         return this.p;
     }

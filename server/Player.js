@@ -26,21 +26,17 @@ class Player extends AliveBehavior{
     }
 
     setAngle(angle){
-        this.angle = angle;
+        this.angle = angle[2];
     }
 
-    setMoveX(direction) {
-        this.moveGhost = 10;         
-        this.moveX = direction;
+    setMove(direction){
+        this.moveGhost = 15;    
+        this.moveX = direction[0];    
+        this.moveY = direction[1];
     }
 
-    setMoveY(direction){
-        this.moveGhost = 10;        
-        this.moveY = direction;
-    }
-
-    playerShoot(angle){
-        this.playerGun.fire(angle, this.posX, this.posY);
+    playerShoot(){        
+        this.playerGun.fire(this.angle, this.posX, this.posY);
     }
 
     update(){        
@@ -50,9 +46,10 @@ class Player extends AliveBehavior{
         if(this.moveGhost > 0){ 
             this.posX = this.posX + (this.moveX * this.spd);        
             this.posY = this.posY + (this.moveY * this.spd);
+        } else {
+            this.moveX = 0;
+            this.moveY = 0;
         }
-        this.moveX = 0;
-        this.moveY = 0;
     }
 }
 
