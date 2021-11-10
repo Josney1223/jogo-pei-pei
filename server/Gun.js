@@ -23,10 +23,11 @@ class Gun{
         var lista = [];
         var pos = [];
         for (var b in this.bullet_list){
-            pos[0] = this.bullet_list[b].getPosX;
-            pos[1] = this.bullet_list[b].getPosY;
+            pos[0] = this.bullet_list[b].getPosX();
+            pos[1] = this.bullet_list[b].getPosY();
             lista[b] = pos;
         }
+        console.log(lista)
         return lista
     }
 
