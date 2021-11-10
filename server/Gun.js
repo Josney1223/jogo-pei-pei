@@ -31,6 +31,7 @@ class Gun{
     }
 
     update(){
+        this.last_shoot--;
         for (var b in this.bullet_list){            
             this.bullet_list[b].update();
         }
