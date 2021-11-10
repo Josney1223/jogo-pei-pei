@@ -22,12 +22,7 @@ class GameLoop{
     }
 
     removePlayer(id){
-        for(var i =0; i < this.PLAYERS.lenght; i++){
-            if(this.PLAYERS[i].getId() == id){
-                delete this.PLAYERS[i];
-                break;
-            }
-        }
+        delete this.PLAYERS[id];
     }
 
     spawnZombies(){
