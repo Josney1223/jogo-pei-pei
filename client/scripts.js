@@ -1,10 +1,29 @@
 var gameCanvas = document.getElementById("game_canvas").getContext("2d");
 var socket = io();
 var last_angle = 0;
+var img = new Image();
 
-socket.on('update', function(data) {
-    //console.log(data);
+socket.on('update', async function(data) {
+    gameCanvas.clearRect(0,0, 800, 500)
+    for(const [key,value] of Object.entries(data.players)) {
+        draw(data.players[key]['pos'][0], data.players[key]['pos'][1],data.players[key]['angle'])
+        for(var b in data.players[key]['bullets']) {
+            console.log(data)
+            gameCanvas.fillRect(data.players[key]['bullets'][b][0],data.players[key]['bullets'][b][1],10,10)
+        }
+    }
+
 });
+
+function draw(x,y,angle) {
+    gameCanvas.save()
+    gameCanvas.rotate(angle)
+    img.onload = function() {
+        gameCanvas.drawImage(img, x, y)
+    }
+    img.src = "/static/img/pepe.png"
+    gameCanvas.restore()
+}
 
 //Evento do teclado
 document.onkeydown = function(event) {
